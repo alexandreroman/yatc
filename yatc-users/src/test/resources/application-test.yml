@@ -1,0 +1,8 @@
+github:
+  endpoint: http://localhost:9876
+  debug: true
+
+spring:
+  cloud:
+    discovery:
+      enabled: false

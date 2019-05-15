@@ -1,0 +1,9 @@
+{
+  "short_name": "YATC",
+  "name": "Yet Another Twitter Clone",
+  "theme_color": "#F5F5F5",
+  "background_color": "#F5F5F5",
+  "display": "standalone",
+  "scope": "/",
+  "start_url": "/"
+}

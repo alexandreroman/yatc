@@ -1,0 +1,74 @@
+---
+applications:
+  - name: yatc-users
+    path: yatc-users/target/yatc-users.jar
+    no-route: true
+    memory: 768M
+    health-check-type: http
+    health-check-http-endpoint: /actuator/health
+    services:
+      - service-registry
+
+  - name: yatc-connections
+    path: yatc-connections/target/yatc-connections.jar
+    no-route: true
+    memory: 768M
+    health-check-type: http
+    health-check-http-endpoint: /actuator/health
+    services:
+      - service-registry
+      - connections-db
+
+  - name: yatc-posts
+    path: yatc-posts/target/yatc-posts.jar
+    no-route: true
+    memory: 768M
+    health-check-type: http
+    health-check-http-endpoint: /actuator/health
+    services:
+      - service-registry
+      - message-broker
+      - posts-db
+
+  - name: yatc-feeds
+    path: yatc-feeds/target/yatc-feeds.jar
+    no-route: true
+    memory: 768M
+    health-check-type: http
+    health-check-http-endpoint: /actuator/health
+    services:
+      - service-registry
+      - message-broker
+      - feeds-db
+
+  - name: yatc-search
+    path: yatc-search/target/yatc-search.jar
+    no-route: true
+    memory: 768M
+    health-check-type: http
+    health-check-http-endpoint: /actuator/health
+    services:
+      - service-registry
+      - message-broker
+      - redis
+
+  - name: yatc-gateway
+    path: yatc-gateway/target/yatc-gateway.jar
+    random-route: true
+    memory: 768M
+    health-check-type: http
+    health-check-http-endpoint: /actuator/health
+    services:
+      - service-registry
+      - config-server
+
+  - name: yatc-webui
+    path: yatc-webui/target/yatc-webui.jar
+    random-route: true
+    memory: 768M
+    health-check-type: http
+    health-check-http-endpoint: /actuator/health
+    services:
+      - config-server
+    env:
+      API_GATEWAY: "https://yatc-gateway-RANDOM.cfapps.io"

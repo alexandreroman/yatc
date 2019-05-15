@@ -1,0 +1,117 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info
+
+spring:
+  main:
+    # Workaround for bean name conflicts between PCF and Eureka dependencies.
+    allow-bean-definition-overriding: true
+  cloud:
+    gateway:
+      routes:
+        # Define routes for each API endpoint, redirecting network traffic
+        # to running instances (using "lb://" prefix means client side
+        # load-balancing will automatically be used for each call).
+        # Filter TokenRelay is used to forward authentication token to endpoints.
+
+        - id: user-add-followers
+          uri: lb://yatc-connections
+          predicates:
+            - Path=/api/v1/{user}/followers/{follower}
+          filters:
+            - SetPath=/api/v1/connections/{user}/{follower}
+            - TokenRelay=
+
+        - id: user-followings
+          uri: lb://yatc-connections
+          predicates:
+            - Path=/api/v1/{user}/followings
+          filters:
+            - SetPath=/api/v1/connections/{user}/followings
+            - TokenRelay=
+
+        - id: user-followers
+          uri: lb://yatc-connections
+          predicates:
+            - Path=/api/v1/{user}/followers
+          filters:
+            - SetPath=/api/v1/connections/{user}
+            - TokenRelay=
+
+        - id: status-create
+          uri: lb://yatc-posts
+          predicates:
+            - Path=/api/v1/status
+          filters:
+            - SetPath=/api/v1/posts
+            - TokenRelay=
+
+        - id: status
+          uri: lb://yatc-posts
+          predicates:
+            - Path=/api/v1/status/{post}
+          filters:
+            - SetPath=/api/v1/posts/{post}
+            - TokenRelay=
+
+        - id: search
+          uri: lb://yatc-search
+          predicates:
+            - Path=/api/v1/search
+          filters:
+            - SetPath=/api/v1/search
+            - TokenRelay=
+
+        - id: user
+          uri: lb://yatc-users
+          predicates:
+            - Path=/api/v1/{user}
+          filters:
+            - SetPath=/api/v1/users/{user}
+            - TokenRelay=
+
+        - id: user-me
+          uri: lb://yatc-users
+          predicates:
+            - Path=/api/v1/me
+          filters:
+            - SetPath=/api/v1/users/me
+            - TokenRelay=
+
+        - id: user-feed
+          uri: lb://yatc-feeds
+          predicates:
+            - Path=/api/v1/{user}/feed
+          filters:
+            - SetPath=/api/v1/feeds/{user}
+            - TokenRelay=
+
+        - id: user-feed-events
+          uri: lb://yatc-feeds
+          predicates:
+            - Path=/api/v1/{user}/feed/sse
+          filters:
+            - SetPath=/api/v1/feeds/{user}/sse
+            - TokenRelay=
+
+  autoconfigure:
+    # TODO: remove when fixed https://github.com/spring-projects/spring-security/issues/6314
+    exclude: org.springframework.boot.actuate.autoconfigure.security.reactive.ReactiveManagementWebSecurityAutoConfiguration
+
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: "32d153cc6170b4421dfb"
+            client-secret: "6218253d518b09b1209dad482783ae124f4b89a6"
+
+server:
+  port: 9000
+
+eureka:
+  client:
+    # This prevents the app from registering itself with the Eureka server.
+    register-with-eureka: false

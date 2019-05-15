@@ -1,0 +1,22 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info
+
+spring:
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+  cloud:
+    stream:
+      bindings:
+        input:
+          destination: posts
+
+security:
+  tokenSecret: "ThisIsMySuperSecretTokenWhichNeedsToBeLongEnough"
+
+server:
+  port: 8084

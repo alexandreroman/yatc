@@ -1,0 +1,11 @@
+api:
+  gateway: "https://yatc-gateway.cfapps.io"
+
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: "72bf2fe74c31d4b2ad40"
+            client-secret: "c2608c13070e0ce63fb10f0dd0fa1d1e93114b75"

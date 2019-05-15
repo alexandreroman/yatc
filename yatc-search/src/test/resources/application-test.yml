@@ -1,0 +1,19 @@
+logging:
+  level:
+    fr:
+      alexandreroman: DEBUG
+    org:
+      hibernate: INFO
+
+spring:
+  cloud:
+    discovery:
+      enabled: false
+    stream:
+      bindings:
+        output:
+          destination: posts
+
+ribbon:
+  eureka:
+    enabled: false

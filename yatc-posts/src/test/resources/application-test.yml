@@ -1,0 +1,14 @@
+logging:
+  level:
+    fr:
+      alexandreroman: DEBUG
+    org:
+      hibernate: INFO
+
+spring:
+  cloud:
+    discovery:
+      enabled: false
+ribbon:
+  eureka:
+    enabled: false

@@ -1,0 +1,15 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, prometheus
+
+github:
+  endpoint: https://api.github.com
+  debug: false
+
+security:
+  tokenSecret: "ThisIsMySuperSecretTokenWhichNeedsToBeLongEnough"
+
+server:
+  port: 8081

@@ -1,0 +1,8 @@
+---
+applications:
+  - name: yatc-webui
+    path: target/yatc-webui.jar
+    random-route: true
+    memory: 768M
+    health-check-type: http
+    health-check-http-endpoint: /actuator/health

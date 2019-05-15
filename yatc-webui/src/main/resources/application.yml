@@ -1,0 +1,17 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info
+
+api:
+  gateway: "http://localhost:9000"
+
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: "32d153cc6170b4421dfb"
+            client-secret: "6218253d518b09b1209dad482783ae124f4b89a6"

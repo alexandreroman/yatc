@@ -1,0 +1,9 @@
+logging:
+  level:
+    fr:
+      alexandreroman: DEBUG
+
+spring:
+  cloud:
+    config:
+      enabled: false
