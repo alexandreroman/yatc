@@ -46,6 +46,7 @@ public class Application {
     SecurityWebFilterChain springWebFilterChain(ServerHttpSecurity http) {
         return http.authorizeExchange()
                 .matchers(EndpointRequest.toAnyEndpoint()).permitAll()
+                .pathMatchers("/actuator/**").permitAll()
                 .pathMatchers("/api/**").permitAll().and()
                 .httpBasic().disable().formLogin().disable()
                 .csrf().disable()

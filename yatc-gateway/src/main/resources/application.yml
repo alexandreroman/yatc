@@ -96,6 +96,41 @@ spring:
             - SetPath=/api/v1/feeds/{user}/sse
             - TokenRelay=
 
+        - id: actuator-users
+          uri: lb://yatc-users
+          predicates:
+            - Path=/actuator/users/**
+          filters:
+            - RewritePath=/actuator/users/(?<segment>.*), /actuator/$\{segment}
+
+        - id: actuator-connections
+          uri: lb://yatc-connections
+          predicates:
+            - Path=/actuator/connections/**
+          filters:
+            - RewritePath=/actuator/connections/(?<segment>.*), /actuator/$\{segment}
+
+        - id: actuator-feeds
+          uri: lb://yatc-feeds
+          predicates:
+            - Path=/actuator/feeds/**
+          filters:
+            - RewritePath=/actuator/feeds/(?<segment>.*), /actuator/$\{segment}
+
+        - id: actuator-posts
+          uri: lb://yatc-posts
+          predicates:
+            - Path=/actuator/posts/**
+          filters:
+            - RewritePath=/actuator/posts/(?<segment>.*), /actuator/$\{segment}
+
+        - id: actuator-search
+          uri: lb://yatc-search
+          predicates:
+            - Path=/actuator/search/**
+          filters:
+            - RewritePath=/actuator/search/(?<segment>.*), /actuator/$\{segment}
+
   autoconfigure:
     # TODO: remove when fixed https://github.com/spring-projects/spring-security/issues/6314
     exclude: org.springframework.boot.actuate.autoconfigure.security.reactive.ReactiveManagementWebSecurityAutoConfiguration
