@@ -10,6 +10,22 @@ spring:
     allow-bean-definition-overriding: true
   cloud:
     gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders:
+              - Content-Type
+              - Authorization
+              - X-XSRF-TOKEN
+              - X-Requested-With
+            maxAge: 3600
       routes:
         # Define routes for each API endpoint, redirecting network traffic
         # to running instances (using "lb://" prefix means client side
@@ -21,6 +37,7 @@ spring:
           predicates:
             - Path=/api/v1/{user}/followers/{follower}
           filters:
+            - RemoveResponseHeader=Set-Cookie
             - SetPath=/api/v1/connections/{user}/{follower}
             - TokenRelay=
 
@@ -29,6 +46,7 @@ spring:
           predicates:
             - Path=/api/v1/{user}/followings
           filters:
+            - RemoveResponseHeader=Set-Cookie
             - SetPath=/api/v1/connections/{user}/followings
             - TokenRelay=
 
@@ -37,6 +55,7 @@ spring:
           predicates:
             - Path=/api/v1/{user}/followers
           filters:
+            - RemoveResponseHeader=Set-Cookie
             - SetPath=/api/v1/connections/{user}
             - TokenRelay=
 
@@ -45,6 +64,7 @@ spring:
           predicates:
             - Path=/api/v1/status
           filters:
+            - RemoveResponseHeader=Set-Cookie
             - SetPath=/api/v1/posts
             - TokenRelay=
 
@@ -53,6 +73,7 @@ spring:
           predicates:
             - Path=/api/v1/status/{post}
           filters:
+            - RemoveResponseHeader=Set-Cookie
             - SetPath=/api/v1/posts/{post}
             - TokenRelay=
 
@@ -61,6 +82,7 @@ spring:
           predicates:
             - Path=/api/v1/search
           filters:
+            - RemoveResponseHeader=Set-Cookie
             - SetPath=/api/v1/search
             - TokenRelay=
 
@@ -69,6 +91,7 @@ spring:
           predicates:
             - Path=/api/v1/{user}
           filters:
+            - RemoveResponseHeader=Set-Cookie
             - SetPath=/api/v1/users/{user}
             - TokenRelay=
 
@@ -77,6 +100,7 @@ spring:
           predicates:
             - Path=/api/v1/me
           filters:
+            - RemoveResponseHeader=Set-Cookie
             - SetPath=/api/v1/users/me
             - TokenRelay=
 
@@ -85,6 +109,7 @@ spring:
           predicates:
             - Path=/api/v1/{user}/feed
           filters:
+            - RemoveResponseHeader=Set-Cookie
             - SetPath=/api/v1/feeds/{user}
             - TokenRelay=
 
@@ -93,6 +118,7 @@ spring:
           predicates:
             - Path=/api/v1/{user}/feed/sse
           filters:
+            - RemoveResponseHeader=Set-Cookie
             - SetPath=/api/v1/feeds/{user}/sse
             - TokenRelay=
 
